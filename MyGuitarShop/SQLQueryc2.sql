@@ -10,11 +10,11 @@ GO
 CREATE OR ALTER FUNCTION fn_GetMostOrdered()
 	RETURNS TABLE
 RETURN 
-	(SELECT TOP 5 O.ProductID, ProductName, COUNT(O.ProductID) AS NumOrders
+	(SELECT TOP 5 O.ProductID, ProductName, COUNT(O.ProductID) AS NumOrders, SUM(Quantity) AS QtyOrdered
 	 FROM OrderItems O JOIN Products P
 		ON O.ProductID = P.ProductID
 	 GROUP BY O.ProductID, ProductName
-	 ORDER BY NumOrders DESC
+	 ORDER BY NumOrders DESC, QtyOrdered DESC
 	);
 GO
 
